@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don't Fall For These — ZNLA Mistake-Proof Checklist</title>
+<style>
+  :root {
+    --dusky-mauve: #A2666B;
+    --coral: #E57A62;
+    --sunset-orange: #FD8842;
+    --golden-amber: #FC9E41;
+    --deep-amber: #FB7F24;
+    --espresso: #3B1006;
+    --white: #FFFFFF;
+    --cream: #FDF6EF;
+    --cream-card: #FFFBF6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(180deg, var(--dusky-mauve) 0%, var(--coral) 30%, var(--sunset-orange) 60%, var(--golden-amber) 100%);
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+    color: var(--espresso);
+  }
+
+  .wrap { max-width: 640px; margin: 0 auto; }
+
+  .header {
+    text-align: center;
+    color: var(--white);
+    padding: 20px 12px 28px;
+  }
+
+  .header .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow: 0 2px 8px rgba(59,16,6,0.25);
+  }
+
+  .header p {
+    margin-top: 10px;
+    font-size: 15px;
+    opacity: 0.95;
+    line-height: 1.5;
+  }
+
+  .progress-card {
+    background: var(--cream-card);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(59,16,6,0.15);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stamp {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--deep-amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: var(--deep-amber);
+    transform: rotate(-8deg);
+  }
+
+  .progress-info { flex: 1; }
+  .progress-info .label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--dusky-mauve);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .progress-bar-bg {
+    background: #F0E4DA;
+    border-radius: 8px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    background: linear-gradient(90deg, var(--sunset-orange), var(--deep-amber));
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.4s ease;
+  }
+
+  .section {
+    background: var(--cream-card);
+    border-radius: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 6px 18px rgba(59,16,6,0.12);
+    overflow: hidden;
+  }
+
+  .section-header {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    background: var(--cream-card);
+  }
+
+  .section-header:active { background: #FBF0E4; }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--espresso);
+  }
+  .section-sub {
+    font-size: 12.5px;
+    color: var(--dusky-mauve);
+    margin-top: 2px;
+  }
+
+  .section-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--white);
+    background: var(--sunset-orange);
+    border-radius: 20px;
+    padding: 3px 10px;
+    white-space: nowrap;
+    margin-left: 10px;
+  }
+
+  .chevron {
+    transition: transform 0.25s ease;
+    color: var(--dusky-mauve);
+    font-size: 14px;
+    margin-left: 8px;
+  }
+  .section.open .chevron { transform: rotate(180deg); }
+
+  .section-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .section.open .section-body { max-height: 3000px; }
+
+  .item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 20px;
+    border-top: 1px solid #F2E5D8;
+    align-items: flex-start;
+  }
+
+  .checkbox {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+    border: 2px solid var(--deep-amber);
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--white);
+    transition: background 0.15s ease;
+  }
+  .checkbox.checked {
+    background: var(--deep-amber);
+    color: var(--white);
+    font-weight: 800;
+  }
+
+  .item-text { flex: 1; }
+  .item-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .item-title.done { text-decoration: line-through; opacity: 0.55; }
+
+  .item-detail {
+    font-size: 13px;
+    color: #6B4A3E;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .callout {
+    margin: 10px 20px 16px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #FFF1E4;
+    border-left: 4px solid var(--deep-amber);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--espresso);
+  }
+  .callout strong { color: var(--sunset-orange); }
+
+  .disclaimer {
+    text-align: center;
+    color: var(--white);
+    font-size: 12.5px;
+    line-height: 1.6;
+    margin-top: 28px;
+    padding: 0 20px;
+    opacity: 0.95;
+  }
+
+  .signoff {
+    text-align: center;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 14px;
+    padding: 0 20px;
+  }
+
+  .reset-btn {
+    display: block;
+    margin: 24px auto 0;
+    background: rgba(255,255,255,0.15);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="eyebrow">ZNLA · Scam-Proof & Status-Safe</div>
+    <h1>Don't Fall For These</h1>
+    <p>The mistakes that cost internationals the most — money, time, and sometimes status. Bestie, we're not learning these the hard way.</p>
+  </div>
+
+  <div class="progress-card">
+    <div class="stamp" id="stampPct">0%</div>
+    <div class="progress-info">
+      <div class="label" id="progressLabel">0 of 0 checked</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div id="sections"></div>
+
+  <div class="disclaimer">This is education, not legal advice — check your DSO or a qualified immigration attorney for your specific case.</div>
+  <div class="signoff">We're not broken. We just weren't given the manual. Now you have it. 🧡</div>
+
+  <button class="reset-btn" onclick="resetAll()">Reset checklist</button>
+</div>
+
+<script>
+const DATA = [
+  {
+    id: "scams",
+    title: "Scam Red Flags",
+    sub: "The ones designed to catch us new, tired, or scared",
+    items: [
+      { id:"s1", title:"Never wire, gift-card, or crypto pay a landlord, recruiter, or caller claiming to be USCIS/IRS/embassy", detail:"Real government agencies never call demanding immediate payment by these methods. If it's urgent, it's fake — real institutions wait while you verify." },
+      { id:"s2", title:"Never send a deposit before seeing the unit in person or on video", detail:"Rental scam red flags: no in-person/video tour, deposit before lease, price way below market, pressure to decide fast ('someone else is interested')." },
+      { id:"s3", title:"Verify any landlord independently before paying anything", detail:"Search the address on a real estate site, check tax records for the owner's name, call the management company using a number you find yourself — not one they give you." },
+      { id:"s4", title:"Hang up on 'embassy' or 'police' calls about a family member or package", detail:"This scam targets internationals specifically because we're far from home and easier to scare. Hang up, verify through official channels, tell your school's international office." },
+      { id:"s5", title:"Walk away from any job that asks for payment before you start", detail:"Real employers never ask for upfront payment for 'equipment' or 'training' — even with a promise to reimburse. If they pressure you to skip verification, the job is the scam." }
+    ]
+  },
+  {
+    id: "status",
+    title: "Status-Risking Mistakes",
+    sub: "Small decisions with big consequences",
+    items: [
+      { id:"st1", title:"Never take cash jobs or unauthorized side gigs, even for 'a little' money", detail:"Unauthorized work is one of the fastest ways to lose F-1 status — and the consequence is SEVIS termination, not a warning. If money's tight, talk to your DSO about hardship options first." },
+      { id:"st2", title:"Answer the sponsorship-disclosure question honestly on job applications", detail:"If you'll need sponsorship eventually, say so. Lying to get in the door can mean a rescinded offer later. Honesty filters you toward employers who actually sponsor." },
+      { id:"st3", title:"Track full-time CPT carefully — 12+ months can remove OPT eligibility", detail:"CPT can be a great opportunity, but full-time CPT for a year or more can burn your OPT eligibility after graduation. Plan it with your DSO, not just your employer." },
+      { id:"st4", title:"Never switch schools, majors, or jobs before looping in your DSO", detail:"Order matters: DSO first, action second. Switching first and doing paperwork later is one of the most common (and most fixable) mistakes." }
+    ]
+  },
+  {
+    id: "docs",
+    title: "Document & Communication Mistakes",
+    sub: "The paperwork traps that catch even careful people",
+    items: [
+      { id:"d1", title:"Read every immigration form's instructions before touching the form", detail:"Instructions are often longer than the form for a reason. Don't guess, don't leave blanks unless told to — write 'N/A' instead." },
+      { id:"d2", title:"Save every version, receipt, and confirmation email you submit", detail:"USCIS doesn't lose paperwork, but they also don't remind you what you filed. Keep your own copy of everything." },
+      { id:"d3", title:"Get a second set of eyes on anything status-affecting before you submit", detail:"Your DSO, a trusted friend who's been through it, or an attorney for anything serious. The stakes are too high to guess alone." }
+    ]
+  }
+];
+
+let checked = {};
+try {
+  const saved = localStorage.getItem('znla-mistakes-checklist');
+  if (saved) checked = JSON.parse(saved);
+} catch(e) { checked = {}; }
+
+function save() {
+  try { localStorage.setItem('znla-mistakes-checklist', JSON.stringify(checked)); } catch(e) {}
+}
+
+function totalItems() {
+  return DATA.reduce((sum, s) => sum + s.items.length, 0);
+}
+function checkedCount() {
+  return Object.values(checked).filter(Boolean).length;
+}
+
+function updateProgress() {
+  const total = totalItems();
+  const done = checkedCount();
+  const pct = total ? Math.round((done/total)*100) : 0;
+  document.getElementById('stampPct').textContent = pct + '%';
+  document.getElementById('progressLabel').textContent = done + ' of ' + total + ' checked';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function toggleItem(id) {
+  checked[id] = !checked[id];
+  save();
+  render();
+}
+
+function toggleSection(id) {
+  const el = document.getElementById('section-' + id);
+  el.classList.toggle('open');
+}
+
+function resetAll() {
+  checked = {};
+  save();
+  render();
+}
+
+function render() {
+  const container = document.getElementById('sections');
+  container.innerHTML = '';
+  DATA.forEach((section, idx) => {
+    const sectionDone = section.items.filter(i => checked[i.id]).length;
+    const wrap = document.createElement('div');
+    wrap.className = 'section' + (idx === 0 ? ' open' : '');
+    wrap.id = 'section-' + section.id;
+
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.onclick = () => toggleSection(section.id);
+    header.innerHTML = `
+      <div>
+        <div class="section-title">${section.title}</div>
+        <div class="section-sub">${section.sub}</div>
+      </div>
+      <div style="display:flex;align-items:center;">
+        <span class="section-count">${sectionDone}/${section.items.length}</span>
+        <span class="chevron">▾</span>
+      </div>
+    `;
+    wrap.appendChild(header);
+
+    const body = document.createElement('div');
+    body.className = 'section-body';
+    section.items.forEach(item => {
+      const isChecked = !!checked[item.id];
+      const row = document.createElement('div');
+      row.className = 'item';
+      row.innerHTML = `
+        <div class="checkbox ${isChecked ? 'checked' : ''}" onclick="toggleItem('${item.id}')">${isChecked ? '✓' : ''}</div>
+        <div class="item-text">
+          <div class="item-title ${isChecked ? 'done' : ''}">${item.title}</div>
+          <div class="item-detail">${item.detail}</div>
+        </div>
+      `;
+      body.appendChild(row);
+    });
+    wrap.appendChild(body);
+    container.appendChild(wrap);
+  });
+  updateProgress();
+}
+
+render();
+</script>
+</body>
+</html>
