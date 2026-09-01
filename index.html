@@ -160,15 +160,13 @@
     overflow: hidden;
     transition: max-height 0.3s ease;
   }
-  .section.open .section-body { max-height: 3000px; }
+  .section.open .section-body { max-height: 5000px; }
 
   .item {
-    display: flex;
-    gap: 12px;
     padding: 14px 20px;
     border-top: 1px solid #F2E5D8;
-    align-items: flex-start;
   }
+  .item-row { display: flex; gap: 12px; align-items: flex-start; }
 
   .checkbox {
     flex-shrink: 0;
@@ -203,6 +201,53 @@
     color: #6B4A3E;
     margin-top: 4px;
     line-height: 1.5;
+  }
+
+  .cta-btn {
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--sunset-orange);
+    color: var(--white);
+    font-size: 12.5px;
+    font-weight: 800;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: none;
+  }
+  .cta-btn:hover { background: var(--deep-amber); }
+  .cta-panel {
+    display: none;
+    margin-top: 12px;
+    background: #FFF4E9;
+    border: 1px solid #F0D8BE;
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .cta-panel.open { display: block; }
+  .cta-step {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 7px 0;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .cta-step .num {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--deep-amber);
+    color: var(--white);
+    font-size: 10.5px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
   }
 
   .callout {
@@ -275,17 +320,59 @@
 </div>
 
 <script>
+function renderCTA(item) {
+  if (!item.cta) return '';
+  const steps = item.cta.map((s, i) => `<div class="cta-step"><div class="num">${i+1}</div><div>${s}</div></div>`).join('');
+  return `
+    <button class="cta-btn" onclick="toggleCTA('${item.id}')">Show me exactly how ↓</button>
+    <div class="cta-panel" id="cta-${item.id}">${steps}</div>
+  `;
+}
+function toggleCTA(id) {
+  document.getElementById('cta-' + id).classList.toggle('open');
+}
+
 const DATA = [
   {
     id: "scams",
     title: "Scam Red Flags",
     sub: "The ones designed to catch us new, tired, or scared",
     items: [
-      { id:"s1", title:"Never wire, gift-card, or crypto pay a landlord, recruiter, or caller claiming to be USCIS/IRS/embassy", detail:"Real government agencies never call demanding immediate payment by these methods. If it's urgent, it's fake — real institutions wait while you verify." },
-      { id:"s2", title:"Never send a deposit before seeing the unit in person or on video", detail:"Rental scam red flags: no in-person/video tour, deposit before lease, price way below market, pressure to decide fast ('someone else is interested')." },
-      { id:"s3", title:"Verify any landlord independently before paying anything", detail:"Search the address on a real estate site, check tax records for the owner's name, call the management company using a number you find yourself — not one they give you." },
-      { id:"s4", title:"Hang up on 'embassy' or 'police' calls about a family member or package", detail:"This scam targets internationals specifically because we're far from home and easier to scare. Hang up, verify through official channels, tell your school's international office." },
-      { id:"s5", title:"Walk away from any job that asks for payment before you start", detail:"Real employers never ask for upfront payment for 'equipment' or 'training' — even with a promise to reimburse. If they pressure you to skip verification, the job is the scam." }
+      { id:"s1", title:"Never wire, gift-card, or crypto pay a landlord, recruiter, or caller claiming to be USCIS/IRS/embassy", detail:"Real government agencies never call demanding immediate payment by these methods. If it's urgent, it's fake — real institutions wait while you verify.",
+        cta:[
+          "Hang up or stop replying immediately — don't confirm any personal details first.",
+          "Look up the agency's real number yourself (not one they gave you) and call to verify.",
+          "Report it — forward to your DSO/HR and, for phone scams, to reportfraud.ftc.gov."
+        ]
+      },
+      { id:"s2", title:"Never send a deposit before seeing the unit in person or on video", detail:"Rental scam red flags: no in-person/video tour, deposit before lease, price way below market, pressure to decide fast ('someone else is interested').",
+        cta:[
+          "Ask for a live video walkthrough if you can't tour in person — refuse if they won't do one.",
+          "Never wire a deposit before signing a lease with a verified landlord.",
+          "If the price feels too good for the area, treat that as a red flag, not luck."
+        ]
+      },
+      { id:"s3", title:"Verify any landlord independently before paying anything", detail:"Search the address on a real estate site, check tax records for the owner's name, call the management company using a number you find yourself — not one they give you.",
+        cta:[
+          "Search the address on Zillow or a county property records site to confirm the listed owner.",
+          "Call the management company using a number you found yourself, not one texted to you.",
+          "Cross-check that the name on the lease matches the name on record."
+        ]
+      },
+      { id:"s4", title:"Hang up on 'embassy' or 'police' calls about a family member or package", detail:"This scam targets internationals specifically because we're far from home and easier to scare. Hang up, verify through official channels, tell your school's international office.",
+        cta:[
+          "Hang up — do not stay on the line to 'clear things up.'",
+          "Call your family member directly on a number you already have to confirm they're safe.",
+          "Report the call to your school's international student office so they can warn others."
+        ]
+      },
+      { id:"s5", title:"Walk away from any job that asks for payment before you start", detail:"Real employers never ask for upfront payment for 'equipment' or 'training' — even with a promise to reimburse. If they pressure you to skip verification, the job is the scam.",
+        cta:[
+          "Decline any request to pay for equipment, training, or 'processing' before day one.",
+          "Verify the company is real — search their name plus 'reviews' or 'scam.'",
+          "If it's remote-only with vague duties and fast hiring, treat that as a red flag."
+        ]
+      }
     ]
   },
   {
@@ -293,10 +380,34 @@ const DATA = [
     title: "Status-Risking Mistakes",
     sub: "Small decisions with big consequences",
     items: [
-      { id:"st1", title:"Never take cash jobs or unauthorized side gigs, even for 'a little' money", detail:"Unauthorized work is one of the fastest ways to lose F-1 status — and the consequence is SEVIS termination, not a warning. If money's tight, talk to your DSO about hardship options first." },
-      { id:"st2", title:"Answer the sponsorship-disclosure question honestly on job applications", detail:"If you'll need sponsorship eventually, say so. Lying to get in the door can mean a rescinded offer later. Honesty filters you toward employers who actually sponsor." },
-      { id:"st3", title:"Track full-time CPT carefully — 12+ months can remove OPT eligibility", detail:"CPT can be a great opportunity, but full-time CPT for a year or more can burn your OPT eligibility after graduation. Plan it with your DSO, not just your employer." },
-      { id:"st4", title:"Never switch schools, majors, or jobs before looping in your DSO", detail:"Order matters: DSO first, action second. Switching first and doing paperwork later is one of the most common (and most fixable) mistakes." }
+      { id:"st1", title:"Never take cash jobs or unauthorized side gigs, even for 'a little' money", detail:"Unauthorized work is one of the fastest ways to lose F-1 status — and the consequence is SEVIS termination, not a warning. If money's tight, talk to your DSO about hardship options first.",
+        cta:[
+          "If money's tight, book time with your DSO to ask about hardship or on-campus work options.",
+          "Check your school's food pantry or emergency fund before taking unauthorized work.",
+          "If someone offers cash work, decline — the risk to your status isn't worth it."
+        ]
+      },
+      { id:"st2", title:"Answer the sponsorship-disclosure question honestly on job applications", detail:"If you'll need sponsorship eventually, say so. Lying to get in the door can mean a rescinded offer later. Honesty filters you toward employers who actually sponsor.",
+        cta:[
+          "Answer sponsorship questions honestly, even if it feels risky.",
+          "Research the employer's sponsorship history (search '[company] H-1B sponsor') before applying.",
+          "If unsure how to phrase it, ask your career center for standard wording."
+        ]
+      },
+      { id:"st3", title:"Track full-time CPT carefully — 12+ months can remove OPT eligibility", detail:"CPT can be a great opportunity, but full-time CPT for a year or more can burn your OPT eligibility after graduation. Plan it with your DSO, not just your employer.",
+        cta:[
+          "Log the exact start date of any full-time CPT authorization.",
+          "Set a reminder well before the 12-month mark to check your running total.",
+          "Review your CPT plan with your DSO before accepting a full-time internship offer."
+        ]
+      },
+      { id:"st4", title:"Never switch schools, majors, or jobs before looping in your DSO", detail:"Order matters: DSO first, action second. Switching first and doing paperwork later is one of the most common (and most fixable) mistakes.",
+        cta:[
+          "Email your DSO before making any final decision to switch schools, majors, or jobs.",
+          "Ask specifically what paperwork needs to happen first, and by when.",
+          "Get written confirmation before you act, not just a verbal okay."
+        ]
+      }
     ]
   },
   {
@@ -304,9 +415,27 @@ const DATA = [
     title: "Document & Communication Mistakes",
     sub: "The paperwork traps that catch even careful people",
     items: [
-      { id:"d1", title:"Read every immigration form's instructions before touching the form", detail:"Instructions are often longer than the form for a reason. Don't guess, don't leave blanks unless told to — write 'N/A' instead." },
-      { id:"d2", title:"Save every version, receipt, and confirmation email you submit", detail:"USCIS doesn't lose paperwork, but they also don't remind you what you filed. Keep your own copy of everything." },
-      { id:"d3", title:"Get a second set of eyes on anything status-affecting before you submit", detail:"Your DSO, a trusted friend who's been through it, or an attorney for anything serious. The stakes are too high to guess alone." }
+      { id:"d1", title:"Read every immigration form's instructions before touching the form", detail:"Instructions are often longer than the form for a reason. Don't guess, don't leave blanks unless told to — write 'N/A' instead.",
+        cta:[
+          "Read the full instructions once before filling in a single field.",
+          "Write 'N/A' instead of leaving a field blank, unless told otherwise.",
+          "If a question is unclear, ask your DSO before submitting — not after."
+        ]
+      },
+      { id:"d2", title:"Save every version, receipt, and confirmation email you submit", detail:"USCIS doesn't lose paperwork, but they also don't remind you what you filed. Keep your own copy of everything.",
+        cta:[
+          "Create one folder (cloud + local backup) for every immigration document you submit.",
+          "Save the confirmation email or receipt number the moment you get it.",
+          "Screenshot the submitted form itself, not just the confirmation page."
+        ]
+      },
+      { id:"d3", title:"Get a second set of eyes on anything status-affecting before you submit", detail:"Your DSO, a trusted friend who's been through it, or an attorney for anything serious. The stakes are too high to guess alone.",
+        cta:[
+          "Identify who your second set of eyes is before you need them — DSO, mentor, or attorney.",
+          "Send the draft form or decision to them with enough time for a real review.",
+          "For anything with legal weight, budget for a paid attorney consult rather than guessing."
+        ]
+      }
     ]
   }
 ];
@@ -385,10 +514,13 @@ function render() {
       const row = document.createElement('div');
       row.className = 'item';
       row.innerHTML = `
-        <div class="checkbox ${isChecked ? 'checked' : ''}" onclick="toggleItem('${item.id}')">${isChecked ? '✓' : ''}</div>
-        <div class="item-text">
-          <div class="item-title ${isChecked ? 'done' : ''}">${item.title}</div>
-          <div class="item-detail">${item.detail}</div>
+        <div class="item-row">
+          <div class="checkbox ${isChecked ? 'checked' : ''}" onclick="toggleItem('${item.id}')">${isChecked ? '✓' : ''}</div>
+          <div class="item-text">
+            <div class="item-title ${isChecked ? 'done' : ''}">${item.title}</div>
+            <div class="item-detail">${item.detail}</div>
+            ${renderCTA(item)}
+          </div>
         </div>
       `;
       body.appendChild(row);
